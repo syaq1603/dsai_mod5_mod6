@@ -1,12 +1,25 @@
-#gemini
-
 from flask import Flask,request,render_template
+import google.generativeai as genai
+
+genai.configure(api_key="AIzaSyC-CPfHvAx5iG0rqso3_4GxM4Q8Ejaq738")
+model = genai.GenerativeModel("gemini-2.0-flash")
 
 app = Flask(__name__)
 
-@app.route("/",methods=["GET","POST"])
+@app.route("/", methods=["Get", "Post"])
 def index():
-
     return(render_template("index.html"))
-    if __name__=="__main__":
-        app_run()
+
+@app.route("/gemini",methods=["GET","POST"])
+def gemini():
+    return(render_template("gemini.html"))
+
+@app.route("/gemini_reply",methods=["GET","POST"])
+def gemini_reply():
+    q = request.form.get("q")
+    r = model.generate_content(q)
+    r = r.text
+    return(render_template("gemini_reply.html", r=r))
+
+if __name__ == "__main__":
+    app.run()
