@@ -1,3 +1,4 @@
+#gemini
 from flask import Flask,request,render_template
 import google.generativeai as genai
 
@@ -23,3 +24,5 @@ def gemini_reply():
 
 if __name__ == "__main__":
     app.run()
+
+
